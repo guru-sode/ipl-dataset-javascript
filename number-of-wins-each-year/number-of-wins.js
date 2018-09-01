@@ -12,6 +12,7 @@ obj.forEach(function(ele){
 });
 var array=Object.keys(res);
 obj.forEach(function(ele){
+  // res[ele["season"]] = res[ele["season"]] || {};
   array.forEach(function(resEle){
     if(resEle==ele["season"]){
       if(ele["winner"] in res[resEle])
@@ -24,4 +25,4 @@ obj.forEach(function(ele){
     }
   });
 });
-console.log(res);
+fs.writeFileSync('number-of-wins.json',JSON.stringify(res));
