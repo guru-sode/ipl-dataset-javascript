@@ -13,57 +13,61 @@
 <body>
   <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
   <script type="text/javascript">
-  var obj={};
-  $.getJSON('number-of-wins.json', function(data) {
-    obj= data;
-    console.log(data);
+    var obj = {};
+    $.getJSON('number-of-wins.json', function(data) {
+      obj = data;
 
-    var returnObj= {
-      chart: {
-        type: 'bar'
-      },
-      title: {
-        text: 'Number of wins of each team year wise'
-      },
-      xAxis: {
-        categories: []
-      },
-      yAxis: {
-        min: 0,
+      var returnObj = {
+        chart: {
+          type: 'bar'
+        },
         title: {
-          text: 'Total number of wins'
-        }
-      },
-      legend: {
-        reversed: true
-      },
-      plotOptions: {
-        series: {
-          stacking: 'normal'
-        }
-      },
-      series: [{
-        name: 'John',
-        data: [1,2,3,4,5,6,7,8,9,60]
-      }, {
-        name: 'Jane',
-        data: [1,2,3,4,5,6,7,8,9,10]
-      }, {
-        name: 'Joe',
-        data: [1,2,3,4,5,3, 4, 4, 2, 9]
-      }]
-    };
-    var insideObjects={};
-    var keysIn=[];
-    var keysOut=Object.keys(obj);
-    keysOut.forEach(function(ele){
-      insideObjects=obj[ele];
-      keysIn=Object.keys(insideObjects);
+          text: 'Number of wins of each team year wise'
+        },
+        xAxis: {
+          categories: []
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Total number of wins'
+          }
+        },
+        legend: {
+          reversed: true
+        },
+        plotOptions: {
+          series: {
+            stacking: 'normal'
+          }
+        },
+        series: []
+      };
+      var insideObjects = {};
+      var keysIn = [];
+      var valuesIn=[];
+      var UniqueTeam = {};
+      var keysOut = Object.keys(obj);
+      keysOut.forEach(function(ele) {
+        insideObjects = obj[ele];
+        keysIn = Object.keys(insideObjects);
+        valuesIn=Object.values(insideObjects);
+        keysIn.forEach(val => {
+          if (val in UniqueTeam) {
+
+          } else {
+            UniqueTeam[val] = 0;
+          }
+        });
+      });
+      var key = Object.keys(UniqueTeam)
+      for (var i = 0; i < key.length; i++) {
+        returnObj.series[i]={name:key[i]};
+      };
+
+      returnObj.xAxis.categories = Object.keys(obj);
+      Highcharts.chart('container', returnObj);
     });
-    console.log(keysIn);
-    returnObj.xAxis.categories = Object.keys(obj);
-    Highcharts.chart('container',returnObj);
-  });
   </script>
 </body>
 
