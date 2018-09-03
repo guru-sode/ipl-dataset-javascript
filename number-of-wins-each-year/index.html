@@ -14,6 +14,7 @@
   <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
   <script type="text/javascript">
     var obj = {};
+    var finalObj={};
     $.getJSON('number-of-wins.json', function(data) {
       obj = data;
 
@@ -43,33 +44,20 @@
         },
         series: []
       };
-      var insideObjects = {};
-      var keysIn = [];
-      var valuesIn = [];
-      var UniqueTeam = {};
-      var wins = {};
-      var keysOut = Object.keys(obj);
-      keysOut.forEach(function(ele) {
-        insideObjects = obj[ele];
-        keysIn = Object.keys(insideObjects);
-        valuesIn = Object.values(insideObjects);
-        keysIn.forEach(val => {
-          if (val in UniqueTeam) {
-
-          } else {
-            UniqueTeam[val] = 0;
-          }
-        });
-      });
-      var key = Object.keys(UniqueTeam)
-      for (var i = 0; i < key.length; i++) {
-        returnObj.series[i] = {
-          name: key[i]
-        };
-      };
+      var teamNames;
+      var numberOfWins;
+      $.getJSON('final.json', function(dataFinal) {
+        finalObj = dataFinal;
+      var teamNames=Object.keys(finalObj);
+      var numberOfWins=Object.values(finalObj);
+      for(var j=0;j<teamNames.length;j++){
+        returnObj.series[j]={name:teamNames[j]};
+        returnObj.series[j]={data:numberOfWins[j]};
+      }
       returnObj.xAxis.categories = Object.keys(obj);
       Highcharts.chart('container', returnObj);
-    });
+            });
+});
   </script>
 </body>
 
