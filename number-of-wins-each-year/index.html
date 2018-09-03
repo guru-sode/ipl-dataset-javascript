@@ -51,8 +51,10 @@
       var teamNames=Object.keys(finalObj);
       var numberOfWins=Object.values(finalObj);
       for(var j=0;j<teamNames.length;j++){
-        returnObj.series[j]={name:teamNames[j]};
-        returnObj.series[j]={data:numberOfWins[j]};
+        var temp={};
+        temp["name"]=teamNames[j];
+        temp["data"]=numberOfWins[j];
+        returnObj.series.push(temp);
       }
       returnObj.xAxis.categories = Object.keys(obj);
       Highcharts.chart('container', returnObj);
