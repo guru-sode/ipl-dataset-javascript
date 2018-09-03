@@ -52,6 +52,8 @@
         insideObjects = obj[ele];
         keysIn = Object.keys(insideObjects);
         valuesIn=Object.values(insideObjects);
+        // return.series[0]={data:valuesIn};
+        console.log(valuesIn);
         keysIn.forEach(val => {
           if (val in UniqueTeam) {
 
@@ -61,10 +63,11 @@
         });
       });
       var key = Object.keys(UniqueTeam)
+      // console.log(UniqueTeam);
       for (var i = 0; i < key.length; i++) {
         returnObj.series[i]={name:key[i]};
+        returnObj.series[i]={data:valuesIn};
       };
-
       returnObj.xAxis.categories = Object.keys(obj);
       Highcharts.chart('container', returnObj);
     });

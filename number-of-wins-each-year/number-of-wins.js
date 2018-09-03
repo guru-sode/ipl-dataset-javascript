@@ -1,3 +1,4 @@
+// module.exports=function(){
 var fs=require('fs');
 var res={};
 var readme=fs.readFileSync('matches.json','utf8');
@@ -25,4 +26,43 @@ obj.forEach(function(ele){
     }
   });
 });
+//Starts here
+var insideObjects = {};
+var keysIn = [];
+var valuesIn=[];
+var UniqueTeam = {};
+var keysOut = Object.keys(res);
+keysOut.forEach(function(ele) {
+  insideObjects = res[ele];
+  keysIn = Object.keys(insideObjects);
+  valuesIn=Object.values(insideObjects);
+  keysIn.forEach(val => {
+    if (val in UniqueTeam) {
+
+    } else {
+      UniqueTeam[val] = 0;
+    }
+  });
+});
+// console.log(UniqueTeam);
+//Ends here
 fs.writeFileSync('number-of-wins.json',JSON.stringify(res));
+var readme=fs.readFileSync('number-of-wins.json','utf8');
+var obj=JSON.parse(readme);
+var KeysJSON=Object.keys(obj);
+KeysJSON.forEach(function (element){
+  for(var team in UniqueTeam){
+     // console.log(obj[element]);
+    if(team in obj[element]){
+
+    }
+    else{
+      obj[element][team]=0;
+    }
+  };
+});
+fs.writeFileSync('number-of-wins.json',JSON.stringify(obj));
+
+
+
+// };
