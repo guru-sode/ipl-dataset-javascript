@@ -44,7 +44,6 @@ keysOut.forEach(function(ele) {
     }
   });
 });
-// console.log(UniqueTeam);
 //Ends here
 fs.writeFileSync('number-of-wins.json',JSON.stringify(res));
 var readme=fs.readFileSync('number-of-wins.json','utf8');
@@ -52,7 +51,6 @@ var obj=JSON.parse(readme);
 var KeysJSON=Object.keys(obj);
 KeysJSON.forEach(function (element){
   for(var team in UniqueTeam){
-     // console.log(obj[element]);
     if(team in obj[element]){
 
     }
@@ -62,7 +60,28 @@ KeysJSON.forEach(function (element){
   };
 });
 fs.writeFileSync('number-of-wins.json',JSON.stringify(obj));
-
-
+var wins={};
+var readme=fs.readFileSync('number-of-wins.json','utf8');
+var obj=JSON.parse(readme);
+var year=Object.keys(obj);
+var insideObjects={};
+year.forEach(function(teamsAndWins){
+  insideObjects=obj[teamsAndWins];
+  var teams=Object.keys(insideObjects);
+  var teamsUnique=Object.keys(UniqueTeam);
+  teams.forEach(function(team){
+      if(team in wins){
+        // console.log(insideObjects[team])
+        wins[team].push(insideObjects[team]);
+      }
+      else{
+        wins[team]=[];
+        wins[team].push(insideObjects[team]);
+        //console.log(Object.valueOf(teamUnique));
+      }
+  });
+});
+console.log(wins);
+fs.writeFileSync('final.json',JSON.stringify(wins));
 
 // };
