@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Number of matches in IPL</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+</head>
+
+<body>
+  <div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
+  <script type="text/javascript">
+  var obj={};
+    $.getJSON('economy.json', function(data) {
+      obj= data;
+      console.log(data);
+
+      var returnObj = {
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: 'Bowling statistics in year 2016'
+        },
+        subtitle: {
+          text: ''
+        },
+        xAxis: {
+          categories: []
+        },
+        yAxis: {
+          title: {
+            text: 'Economy'
+          }
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            enableMouseTracking: false
+          }
+        },
+        series: [{
+          name: 'Season',
+          data: []
+        }]
+      };
+      returnObj.xAxis.categories = Object.keys(obj);
+      returnObj.series[0].data = Object.values(obj);
+      Highcharts.chart('container',returnObj);
+      console.log(Object.keys(obj));
+    });
+  </script>
+</body>
+
+</html>
