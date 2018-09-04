@@ -1,27 +1,23 @@
-// module.exports=function(){
-var fs=require('fs');
-var res={};
-var readme=fs.readFileSync('matches.json','utf8');
-var obj=JSON.parse(readme);
-obj.forEach(function(ele){
-  if(ele["season"] in res)
-  {
+module.exports.numberOfWins=function(obj){
+var fs = require('fs');
+var res = {};
+// var readme = fs.readFileSync('matches.json', 'utf8');
+// var obj = JSON.parse(readme);
+obj.forEach(function(ele) {
+  if (ele["season"] in res) {
 
-  }
-    else
-    res[ele["season"]]={};
+  } else
+    res[ele["season"]] = {};
 });
-var array=Object.keys(res);
-obj.forEach(function(ele){
-  // res[ele["season"]] = res[ele["season"]] || {};
-  array.forEach(function(resEle){
-    if(resEle==ele["season"]){
-      if(ele["winner"] in res[resEle])
+var array = Object.keys(res);
+obj.forEach(function(ele) {
+  array.forEach(function(resEle) {
+    if (resEle == ele["season"]) {
+      if (ele["winner"] in res[resEle])
         res[resEle][ele["winner"]]++;
-        else
-        res[resEle][ele["winner"]]=1;
-    }
-    else{
+      else
+        res[resEle][ele["winner"]] = 1;
+    } else {
 
     }
   });
@@ -29,13 +25,13 @@ obj.forEach(function(ele){
 //Starts here
 var insideObjects = {};
 var keysIn = [];
-var valuesIn=[];
+var valuesIn = [];
 var UniqueTeam = {};
 var keysOut = Object.keys(res);
 keysOut.forEach(function(ele) {
   insideObjects = res[ele];
   keysIn = Object.keys(insideObjects);
-  valuesIn=Object.values(insideObjects);
+  valuesIn = Object.values(insideObjects);
   keysIn.forEach(val => {
     if (val in UniqueTeam) {
 
@@ -45,43 +41,40 @@ keysOut.forEach(function(ele) {
   });
 });
 //Ends here
-fs.writeFileSync('number-of-wins.json',JSON.stringify(res));
-var readme=fs.readFileSync('number-of-wins.json','utf8');
-var obj=JSON.parse(readme);
-var KeysJSON=Object.keys(obj);
-KeysJSON.forEach(function (element){
-  for(var team in UniqueTeam){
-    if(team in obj[element]){
+fs.writeFileSync('number-of-wins.json', JSON.stringify(res));
+var readme = fs.readFileSync('number-of-wins.json', 'utf8');
+var obj = JSON.parse(readme);
+var KeysJSON = Object.keys(obj);
+KeysJSON.forEach(function(element) {
+  for (var team in UniqueTeam) {
+    if (team in obj[element]) {
 
-    }
-    else{
-      obj[element][team]=0;
+    } else {
+      obj[element][team] = 0;
     }
   };
 });
-fs.writeFileSync('number-of-wins.json',JSON.stringify(obj));
-var wins={};
-var readme=fs.readFileSync('number-of-wins.json','utf8');
-var obj=JSON.parse(readme);
-var year=Object.keys(obj);
-var insideObjects={};
-year.forEach(function(teamsAndWins){
-  insideObjects=obj[teamsAndWins];
-  var teams=Object.keys(insideObjects);
-  var teamsUnique=Object.keys(UniqueTeam);
-  teams.forEach(function(team){
-      if(team in wins){
-        // console.log(insideObjects[team])
-        wins[team].push(insideObjects[team]);
-      }
-      else{
-        wins[team]=[];
-        wins[team].push(insideObjects[team]);
-        //console.log(Object.valueOf(teamUnique));
-      }
+fs.writeFileSync('number-of-wins.json', JSON.stringify(obj));
+var wins = {};
+var readme = fs.readFileSync('number-of-wins.json', 'utf8');
+var obj = JSON.parse(readme);
+var year = Object.keys(obj);
+var insideObjects = {};
+year.forEach(function(teamsAndWins) {
+  insideObjects = obj[teamsAndWins];
+  var teams = Object.keys(insideObjects);
+  var teamsUnique = Object.keys(UniqueTeam);
+  teams.forEach(function(team) {
+    if (team in wins) {
+      // console.log(insideObjects[team])
+      wins[team].push(insideObjects[team]);
+    } else {
+      wins[team] = [];
+      wins[team].push(insideObjects[team]);
+      //console.log(Object.valueOf(teamUnique));
+    }
   });
 });
-console.log(wins);
-fs.writeFileSync('final.json',JSON.stringify(wins));
-
-// };
+fs.writeFileSync('final.json', JSON.stringify(wins));
+return wins;
+};

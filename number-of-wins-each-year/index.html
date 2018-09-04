@@ -14,7 +14,7 @@
   <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
   <script type="text/javascript">
     var obj = {};
-    var finalObj={};
+    var finalObj = {};
     $.getJSON('number-of-wins.json', function(data) {
       obj = data;
 
@@ -48,18 +48,18 @@
       var numberOfWins;
       $.getJSON('final.json', function(dataFinal) {
         finalObj = dataFinal;
-      var teamNames=Object.keys(finalObj);
-      var numberOfWins=Object.values(finalObj);
-      for(var j=0;j<teamNames.length;j++){
-        var temp={};
-        temp["name"]=teamNames[j];
-        temp["data"]=numberOfWins[j];
-        returnObj.series.push(temp);
-      }
-      returnObj.xAxis.categories = Object.keys(obj);
-      Highcharts.chart('container', returnObj);
-            });
-});
+        var teamNames = Object.keys(finalObj);
+        var numberOfWins = Object.values(finalObj);
+        for (var j = 0; j < teamNames.length; j++) {
+          var temp = {};
+          temp["name"] = teamNames[j];
+          temp["data"] = numberOfWins[j];
+          returnObj.series.push(temp);
+        }
+        returnObj.xAxis.categories = Object.keys(obj);
+        Highcharts.chart('container', returnObj);
+      });
+    });
   </script>
 </body>
 
