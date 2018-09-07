@@ -3,15 +3,15 @@ var fs = require('fs');
 var res = {};
 // var readme = fs.readFileSync('matches.json', 'utf8');
 // var obj = JSON.parse(readme);
-obj.forEach(function(ele) {
+obj.map(ele=> {
   if (ele["season"] in res) {
 
   } else
     res[ele["season"]] = {};
 });
 var array = Object.keys(res);
-obj.forEach(function(ele) {
-  array.forEach(function(resEle) {
+obj.map(ele=> {
+  array.map(resEle=> {
     if (resEle == ele["season"]) {
       if (ele["winner"] in res[resEle])
         res[resEle][ele["winner"]]++;
@@ -28,11 +28,11 @@ var keysIn = [];
 var valuesIn = [];
 var UniqueTeam = {};
 var keysOut = Object.keys(res);
-keysOut.forEach(function(ele) {
+keysOut.map(ele=> {
   insideObjects = res[ele];
   keysIn = Object.keys(insideObjects);
   valuesIn = Object.values(insideObjects);
-  keysIn.forEach(val => {
+  keysIn.map(val => {
     if (val in UniqueTeam) {
 
     } else {
@@ -45,7 +45,7 @@ fs.writeFileSync('number-of-wins.json', JSON.stringify(res));
 var readme = fs.readFileSync('number-of-wins.json', 'utf8');
 var obj = JSON.parse(readme);
 var KeysJSON = Object.keys(obj);
-KeysJSON.forEach(function(element) {
+KeysJSON.map(element=> {
   for (var team in UniqueTeam) {
     if (team in obj[element]) {
 
@@ -60,11 +60,11 @@ var readme = fs.readFileSync('number-of-wins.json', 'utf8');
 var obj = JSON.parse(readme);
 var year = Object.keys(obj);
 var insideObjects = {};
-year.forEach(function(teamsAndWins) {
+year.map(teamsAndWins=> {
   insideObjects = obj[teamsAndWins];
   var teams = Object.keys(insideObjects);
   var teamsUnique = Object.keys(UniqueTeam);
-  teams.forEach(function(team) {
+  teams.map(team=> {
     if (team in wins) {
       // console.log(insideObjects[team])
       wins[team].push(insideObjects[team]);
