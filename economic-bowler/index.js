@@ -53,7 +53,7 @@ for(var i=0;i<runs.length;i++){
 
 var ans={};
 for(var i=0;i<bowlerName.length;i++){
-  ans[bowlerName[i]]=eco[i];
+  ans[bowlerName[i]]=(eco[i]*6);
 }
 console.log(ans);
 
