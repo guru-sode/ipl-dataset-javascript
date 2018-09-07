@@ -16,14 +16,14 @@ var deliverObj = JSON.parse(readmeDelivery);
 var idObject=[];
 var readmeMatches=fs.readFileSync('matches.json','utf8');
 var MatchesObj=JSON.parse(readmeMatches);
-MatchesObj.forEach(function(match){
+MatchesObj.map(match=>{
   if(match["season"]==2016)
   idObject.push(match["id"]);
 });
 
 var idDelivery={};
-deliverObj.forEach(function(delivery){
-  idObject.forEach(function(id){
+deliverObj.map(delivery=>{
+  idObject.map(id=>{
     if(delivery["match_id"]==id){
     idDelivery=delivery;
     if(idDelivery["bowling_team"] in res){
