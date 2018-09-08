@@ -1,5 +1,3 @@
-var res = {};
-var sum = 0;
 var fs = require('fs');
 var readmeDelivery = fs.readFileSync('deliveries.json', 'utf8');
 var deliverObj = JSON.parse(readmeDelivery);
@@ -7,54 +5,51 @@ var deliverObj = JSON.parse(readmeDelivery);
 
 var readmeMatches = fs.readFileSync('matches.json', 'utf8');
 var MatchesObj = JSON.parse(readmeMatches);
-let idObject = MatchesObj.reduce((acc, match) => {
+let idArray = MatchesObj.reduce((acc, match) => {
   if (match["season"] == 2015)
     acc.push(match["id"]);
   return acc
-}, []); console.log(idObject);
+}, []); 
 
-var idDelivery = {};
-deliverObj.map(delivery => {
-  idObject.map(id => {
-    if (delivery["match_id"] == id) {
-      idDelivery = delivery;
-      if (idDelivery["bowler"] in res) {
-        res[idDelivery["bowler"]] = parseInt(res[idDelivery["bowler"]]) + parseInt(idDelivery["total_runs"]);
-      }
-      else {
-        res[idDelivery["bowler"]] = 0;
-      }
-    }
-  });
-});
 
-var NoBowls = {};
-deliverObj.map(delivery => {
-  idObject.map(id => {
-    if (delivery["match_id"] == id) {
-      idDelivery = delivery;
-      if (delivery["bowler"] in NoBowls) {
-        NoBowls[delivery["bowler"]]++;
-      }
-      else {
-        NoBowls[delivery["bowler"]] = 0;
-      }
+
+var res=deliverObj.reduce((acc,delivery)=>{
+  if(idArray.includes(parseInt(delivery["match_id"]))){
+    if(delivery["bowler"] in acc){
+      acc[delivery["bowler"]]=parseInt(acc[delivery["bowler"]])+parseInt(delivery["total_runs"]);
     }
-  });
-});
-var ans = {};
-var runs = Object.values(res);
-var bowlerName = Object.keys(res);
-var bowls = Object.values(NoBowls);
-var eco = [];
-for (var i = 0; i < runs.length; i++) {
-  eco.push(runs[i] / bowls[i]);
+    else{
+      acc[delivery["bowler"]]=0;
+    }
+  }
+  return acc;
+},{});
+
+var NoBowls=deliverObj.reduce((acc,delivery)=>{
+  if(idArray.includes(parseInt(delivery["match_id"]))){
+  if(delivery["bowler"] in acc){
+    acc[delivery["bowler"]]++;
+  }
+  else{
+    acc[delivery["bowler"]]=0;
+  }
+}
+return acc;
+},{});
+
+
+var runs=Object.values(res);
+var bowlerName=Object.keys(res);
+var bowls=Object.values(NoBowls);
+var eco=[];
+for(var i=0;i<runs.length;i++){
+  eco.push(runs[i]/bowls[i]);
 }
 
-var ans = {};
-for (let i = 0; i < bowlerName.length; i++) {
-  ans[bowlerName[i]] = (eco[i] * 6);
+var ans={};
+for(var i=0;i<bowlerName.length;i++){
+  ans[bowlerName[i]]=(eco[i]*6);
 }
 console.log(ans);
 
-fs.writeFileSync('economy.json', JSON.stringify(ans));
+fs.writeFileSync('economy.json',JSON.stringify(ans));
