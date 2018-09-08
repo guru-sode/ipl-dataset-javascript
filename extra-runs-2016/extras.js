@@ -13,13 +13,13 @@ var readmeDelivery = fs.readFileSync('deliveries.json', 'utf8');
 var deliverObj = JSON.parse(readmeDelivery);
 
 
-var idObject=[];
-var readmeMatches=fs.readFileSync('matches.json','utf8');
-var MatchesObj=JSON.parse(readmeMatches);
-MatchesObj.map(match=>{
-  if(match["season"]==2016)
-  idObject.push(match["id"]);
-});
+var readmeMatches = fs.readFileSync('matches.json', 'utf8');
+var MatchesObj = JSON.parse(readmeMatches);
+let idObject = MatchesObj.reduce((acc, match) => {
+  if (match["season"] == 2016)
+    acc.push(match["id"]);
+  return acc
+}, []); console.log(idObject);
 
 var idDelivery={};
 deliverObj.map(delivery=>{
