@@ -7,7 +7,6 @@
 // csvToJson.generateJsonFileFromCsv(fileInputName,fileOutputName);
 // csvToJson.formatValueByType().getJsonFromCsv(fileInputName);
 var res={};
-var sum=0;
 var fs = require('fs');
 var readmeDelivery = fs.readFileSync('deliveries.json', 'utf8');
 var deliverObj = JSON.parse(readmeDelivery);
@@ -21,18 +20,21 @@ let idObject = MatchesObj.reduce((acc, match) => {
   return acc
 }, []); console.log(idObject);
 
-var idDelivery={};
-deliverObj.map(delivery=>{
-  idObject.map(id=>{
+
+var res=deliverObj.reduce((acc1,delivery)=>{
+  idObject.reduce((acc2,id)=>{
     if(delivery["match_id"]==id){
     idDelivery=delivery;
-    if(idDelivery["bowling_team"] in res){
-      res[idDelivery["bowling_team"]]=parseInt(res[idDelivery["bowling_team"]])+parseInt(idDelivery["extra_runs"]);
+    if(idDelivery["bowling_team"] in acc1){
+      acc1[idDelivery["bowling_team"]]=parseInt(acc1[idDelivery["bowling_team"]])+parseInt(idDelivery["extra_runs"]);
     }
     else{
-      res[idDelivery["bowling_team"]]=0;
+      acc1[idDelivery["bowling_team"]]=0;
     }
   }
   });
-});
+  return acc1;
+},{});
+console.log(res);
+
 fs.writeFileSync('extras.json', JSON.stringify(res));
