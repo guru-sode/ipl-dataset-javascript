@@ -15,7 +15,7 @@
   <script type="text/javascript">
     var obj = {};
     var finalObj = {};
-    $.getJSON('number-of-wins.json', function(data) {
+    $.getJSON('number-of-wins.json', function (data) {
       obj = data;
 
       var returnObj = {
@@ -46,7 +46,7 @@
       };
       var teamNames;
       var numberOfWins;
-      $.getJSON('final.json', function(dataFinal) {
+      $.getJSON('final.json', function (dataFinal) {
         finalObj = dataFinal;
         var teamNames = Object.keys(finalObj);
         var numberOfWins = Object.values(finalObj);
